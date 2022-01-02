@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Input, Button, Checkbox, Divider, FormInstance } from 'antd';
 import './index.css';
-import {MailOutlined} from '@ant-design/icons';
+import {HomeOutlined} from '@ant-design/icons';
 import {UserLogin} from '../../static/request/login'
 interface LoginState{
 }
@@ -42,8 +42,8 @@ class Login extends React.Component<LoginProps,LoginState>{
         return(
         <div className="LoginForm">
             <div className="Header">
-            <MailOutlined />
-                Mail后台管理系统
+            <HomeOutlined />
+                Mall后台管理系统
             </div>
             <div className="title-line">
                 <span className="tit">登陆</span>

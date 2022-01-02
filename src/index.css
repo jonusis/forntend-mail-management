@@ -13,3 +13,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.loginMessage1{
+  color:bisque;
+}
+.loginMessage2{
+  float:right;
+  color:bisque;
+}
+.header{
+  height: 64px;
+  padding: 0 50px;
+  color: rgba(0, 0, 0, 0.85);
+  line-height: 64px;
+  display: flex;
+  justify-content: space-between;
+  background: #001529;
+}

@@ -1,6 +1,4 @@
 import Login from '../../model/login/index'
-import Detail from '../../model/detail/index'
-
 export interface RouteMoudle{
     path: string,
     children?: RouteMoudle[],
@@ -15,9 +13,14 @@ const routes: RouteMoudle[] = [
                 compoment: Login,
             },
             {
-                path: "/detail",
-                compoment: Detail,
-            }
+                path: "",
+                children:[
+                    {
+                        path: "/user/manage",
+                        compoment: Login,
+                    }
+                ]
+            },
         ]
     }
 ]
