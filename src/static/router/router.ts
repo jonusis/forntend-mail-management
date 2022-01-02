@@ -1,4 +1,7 @@
-import Login from '../../model/login/index'
+import Login from '../../model/login/index';
+import User from '../../model/user/index';
+import Business from '../../model/business/index';
+
 export interface RouteMoudle{
     path: string,
     children?: RouteMoudle[],
@@ -17,8 +20,12 @@ const routes: RouteMoudle[] = [
                 children:[
                     {
                         path: "/user/manage",
-                        compoment: Login,
-                    }
+                        compoment: User,
+                    },
+                    {
+                        path: "/business/manage",
+                        compoment: Business,
+                    },
                 ]
             },
         ]

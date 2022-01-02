@@ -69,7 +69,7 @@ class App extends React.Component<AppProps,AppState>{
                   </SubMenu>
                   <SubMenu key="sub2" icon={<UserOutlined />} title="商家">
                     <Menu.Item key="2-1">
-                      <Link to={`/user/manage`}>商家管理</Link>
+                      <Link to={`/business/manage`}>商家管理</Link>
                     </Menu.Item>
                   </SubMenu>
                   <SubMenu key="sub3" icon={<NotificationOutlined />} title="订单">
