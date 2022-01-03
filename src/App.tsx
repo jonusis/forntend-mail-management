@@ -43,7 +43,7 @@ class App extends React.Component<AppProps,AppState>{
         <Routes>
           <Route path="/login" element={<Login/>} />
         </Routes>
-        <Layout style={{ height: '100vh' }}>
+        <Layout style={{ minHeight: '100vh' }}>
             <div className="header">
               <div className="loginMessage1">
                 <ShoppingCartOutlined />
