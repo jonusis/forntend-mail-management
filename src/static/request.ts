@@ -11,7 +11,7 @@ export default class Request{
         return fetch(url, {
             method: method,
             headers: {
-                'Content-Type': 'text/plain;charset=UTF-8',
+                'Content-Type': 'application/json;charset=UTF-8',
                 'mode':'cors'
             },
             body:JSON.stringify(body)

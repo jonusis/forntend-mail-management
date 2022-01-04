@@ -1,237 +1,137 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
-import { Table, Input, Button, Popconfirm, Form } from 'antd';
-import { FormInstance } from 'antd/lib/form';
-
-const EditableContext = React.createContext<FormInstance<any> | null>(null);
-
-interface Item {
-  key: string;
-  name: string;
-  age: string;
-  address: string;
+import React from 'react';
+import { Table, Form, Input, Button, Checkbox, Divider, FormInstance, Select, Space, Modal } from 'antd';
+import {GetUserList} from '../../static/request/user';
+import {UserDto} from '../../static/response';
+import './index.css';
+import { DeleteOutlined, DownOutlined, EditOutlined, ExclamationCircleOutlined, UserAddOutlined } from '@ant-design/icons';
+const { confirm } = Modal;
+interface UserManageState{
+  formData: UserDto[]
+  selectedRowKeys:any[]
 }
-
-interface EditableRowProps {
-  index: number;
+interface UserManageProps{
+    
 }
+const { Option } = Select;
 
-const EditableRow: React.FC<EditableRowProps> = ({ index, ...props }) => {
-  const [form] = Form.useForm();
-  return (
-    <Form form={form} component={false}>
-      <EditableContext.Provider value={form}>
-        <tr {...props} />
-      </EditableContext.Provider>
-    </Form>
-  );
-};
-
-interface EditableCellProps {
-  title: React.ReactNode;
-  editable: boolean;
-  children: React.ReactNode;
-  dataIndex: keyof Item;
-  record: Item;
-  handleSave: (record: Item) => void;
-}
-
-const EditableCell: React.FC<EditableCellProps> = ({
-  title,
-  editable,
-  children,
-  dataIndex,
-  record,
-  handleSave,
-  ...restProps
-}) => {
-  const [editing, setEditing] = useState(false);
-  const inputRef = useRef<Input>(null);
-  const form = useContext(EditableContext)!;
-
-  useEffect(() => {
-    if (editing) {
-      inputRef.current!.focus();
+class UserManage extends React.Component<UserManageProps,UserManageState>{
+    constructor(props: UserManageProps){
+        super(props);
+        this.state = {
+          selectedRowKeys: [], // Check here to configure the default column
+          formData : []
+        };
     }
-  }, [editing]);
-
-  const toggleEdit = () => {
-    setEditing(!editing);
-    form.setFieldsValue({ [dataIndex]: record[dataIndex] });
-  };
-
-  const save = async () => {
-    try {
-      const values = await form.validateFields();
-
-      toggleEdit();
-      handleSave({ ...record, ...values });
-    } catch (errInfo) {
-      console.log('Save failed:', errInfo);
-    }
-  };
-
-  let childNode = children;
-
-  if (editable) {
-    childNode = editing ? (
-      <Form.Item
-        style={{ margin: 0 }}
-        name={dataIndex}
-        rules={[
-          {
-            required: true,
-            message: `${title} is required.`,
-          },
-        ]}
-      >
-        <Input ref={inputRef} onPressEnter={save} onBlur={save} />
-      </Form.Item>
-    ) : (
-      <div className="editable-cell-value-wrap" style={{ paddingRight: 24 }} onClick={toggleEdit}>
-        {children}
-      </div>
-    );
-  }
-
-  return <td {...restProps}>{childNode}</td>;
-};
-
-type EditableTableProps = Parameters<typeof Table>[0];
-
-interface DataType {
-  key: React.Key;
-  name: string;
-  age: string;
-  address: string;
-}
-
-interface EditableTableState {
-  dataSource: DataType[];
-  count: number;
-}
-
-type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
-
-class EditableTable extends React.Component<EditableTableProps, EditableTableState> {
-  columns: (ColumnTypes[number] & { editable?: boolean; dataIndex: string })[];
-
-  constructor(props: EditableTableProps) {
-    super(props);
-
-    this.columns = [
+    columns = [
       {
-        title: 'name',
-        dataIndex: 'name',
-        width: '30%',
-        editable: true,
+          title: 'uid',
+          dataIndex: 'uid',
       },
       {
-        title: 'age',
+          title: 'Name',
+          dataIndex: 'name',
+          width: '300px'
+  
+      },
+      {
+        title: 'Account',
+        dataIndex: 'account',
+        width: '300px'
+      },
+      {
+        title: 'Age',
         dataIndex: 'age',
       },
       {
-        title: 'address',
-        dataIndex: 'address',
+        title: 'Sex',
+        dataIndex: 'sex',
       },
       {
-        title: 'operation',
-        dataIndex: 'operation',
-        render: (_, record: { key: React.Key }) =>
-          this.state.dataSource.length >= 1 ? (
-            <><Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
-              <a>Delete</a>
-            </Popconfirm><Popconfirm title="Sure to delete?" onConfirm={() => this.edite(record.key)}>
-                <a>edite</a>
-              </Popconfirm></>
-          ) : null,
+        title: 'Action',
+        key: 'action',
+        width: '300px',
+        render: () => (
+          <Space size="middle">
+            <Button><EditOutlined />edit</Button>
+            <Button onClick={() => this.showConfirm()}><DeleteOutlined />Delete</Button>
+          </Space>
+        ),
       },
     ];
-    this.state = {
-      dataSource: [
-        {
-          key: '0',
-          name: 'Edward King 0',
-          age: '32',
-          address: 'London, Park Lane no. 0',
+    async componentDidMount(){
+      const res = await GetUserList(1,8);
+      this.setState({
+        formData: res.data
+      })
+    }
+    showConfirm = () => {
+      confirm({
+        title: '确认要删除这条数据?',
+        icon: <ExclamationCircleOutlined />,
+        onOk() {
+          //执行删除语句
         },
-        {
-          key: '1',
-          name: 'Edward King 1',
-          age: '32',
-          address: 'London, Park Lane no. 1',
+        onCancel() {
         },
-      ],
-      count: 2,
+      });
+    }
+    
+    onSelectChange = (selectedRowKeys: any) => {
+      console.log('selectedRowKeys changed: ', selectedRowKeys);
+      this.setState({ selectedRowKeys });
     };
-  }
-
-  handleDelete = (key: React.Key) => {
-    const dataSource = [...this.state.dataSource];
-    this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
-  };
-
-  handleAdd = () => {
-    const { count, dataSource } = this.state;
-    const newData: DataType = {
-      key: count,
-      name: `Edward King ${count}`,
-      age: '32',
-      address: `London, Park Lane no. ${count}`,
-    };
-    this.setState({
-      dataSource: [...dataSource, newData],
-      count: count + 1,
-    });
-  };
-
-  handleSave = (row: DataType) => {
-    const newData = [...this.state.dataSource];
-    const index = newData.findIndex(item => row.key === item.key);
-    const item = newData[index];
-    newData.splice(index, 1, {
-      ...item,
-      ...row,
-    });
-    this.setState({ dataSource: newData });
-  };
-
-  render() {
-    const { dataSource } = this.state;
-    const components = {
-      body: {
-        row: EditableRow,
-        cell: EditableCell,
-      },
-    };
-    const columns = this.columns.map(col => {
-      if (!col.editable) {
-        return col;
+    render(){
+      const {formData, selectedRowKeys} = this.state;
+      const rowSelection = {
+        selectedRowKeys,
+        onchange: this.onSelectChange
       }
-      return {
-        ...col,
-        onCell: (record: DataType) => ({
-          record,
-          editable: col.editable,
-          dataIndex: col.dataIndex,
-          title: col.title,
-          handleSave: this.handleSave,
-        }),
-      };
-    });
-    return (
-      <div>
-        <Button onClick={this.handleAdd} type="primary" style={{ marginBottom: 16 }}>
-          Add a row
-        </Button>
-        <Table
-          components={components}
-          rowClassName={() => 'editable-row'}
-          bordered
-          dataSource={dataSource}
-          columns={columns as ColumnTypes}
-        />
-      </div>
-    );
-  }
+        return(
+        <div style={{background:'white',padding:'10px 30px'}}>
+          <div className="searchForm">
+          <Form
+            name="basic"
+            layout="inline"
+            autoComplete="off"
+          >
+          <Form.Item
+            label="Name"
+            name="Name"
+          >
+            <Input width="30px"/>
+          </Form.Item>
+          <Form.Item
+              label="Account"
+              name="account"
+          >
+            <Input width="30px"/>
+          </Form.Item>
+          <Form.Item
+              label="Age"
+              name="age"
+          >
+            <Input width="30px"/>
+          </Form.Item>
+          <Form.Item
+              label="Sex"
+              name="sex"
+          >
+          <Select style={{ width: 120 }}>
+          <Option value="0">女</Option>
+          <Option value="1">男</Option>
+              </Select>
+              </Form.Item>
+            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+              <Button type="primary" htmlType="submit">
+                Search
+              </Button>
+            </Form.Item>
+          </Form>
+          <Button style={{float:'right'}}><UserAddOutlined />add user</Button>
+          </div>
+            <Table columns={this.columns} dataSource={formData } />
+        </div>
+    )
+    }
 }
-export default EditableTable;
+export default UserManage;
