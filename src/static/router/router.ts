@@ -1,5 +1,5 @@
 import Login from '../../model/login/index';
-import User from '../../model/user/index';
+import User from '../../model/user';
 import Business from '../../model/business/index';
 
 export interface RouteMoudle{
