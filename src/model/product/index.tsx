@@ -33,7 +33,7 @@ class GoodsManage extends React.Component<GoodsManageProps,GoodsManageState>{
           isshowEditModel: false,
           isshowAddModel: false,
           currentPage: 0,
-          totalPage: 50,
+          totalPage: 50, 
           pageSize: 6
         };
     }
@@ -287,7 +287,7 @@ class GoodsManage extends React.Component<GoodsManageProps,GoodsManageState>{
           <Form.Item
               label="Count"
               name="count"
-          >
+          > 
             <Input width="30px"/>
           </Form.Item>
           <Form.Item

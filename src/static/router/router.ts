@@ -26,6 +26,30 @@ const routes: RouteMoudle[] = [
                         path: "/business/manage",
                         compoment: Business,
                     },
+                    {
+                        path: "/order/manage",
+                        compoment: Business,
+                    },
+                    {
+                        path: "/order/setting",
+                        compoment: Business,
+                    },
+                    {
+                        path: "/order/delivery",
+                        compoment: Business,
+                    },
+                    {
+                        path: "/goods/manage",
+                        compoment: Business,
+                    },
+                    {
+                        path: "/goods/setting",
+                        compoment: Business,
+                    },
+                    {
+                        path: "/goods/delivery",
+                        compoment: Business,
+                    },
                 ]
             },
         ]
