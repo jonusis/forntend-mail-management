@@ -4,7 +4,7 @@ const request = Request.GetInstance();
 const url = Request.GetUrl();
 
 export const GetBusinessList = async (pageNum?: number,pageSize?: number) => {
-    const res = await request.Fetch(`${url}/user/queryBusinessList?pageNum=${pageNum}&pageSize=${pageSize}`,'GET');
+    const res = await request.Fetch(`${url}/business/queryBusinessList?pageNum=${pageNum}&pageSize=${pageSize}`,'GET');
     return new BusinessResponseArrayDto(res);
 }
 
@@ -17,17 +17,17 @@ export const AddBusiness = async (
         password: number;
     }
 ) => {
-    const res = await request.Fetch(`${url}/user/addBusiness`,'POST',body);
+    const res = await request.Fetch(`${url}/business/addBusiness`,'POST',body);
     return new ResponseStateDto(res);
 }
 
 export const DeleteBusiness = async (bid: number) => {
-    const res = await request.Fetch(`${url}/user/deleteBusiness?bid=${bid}`,'DELETE');
+    const res = await request.Fetch(`${url}/business/deleteBusiness?bid=${bid}`,'DELETE');
     return new ResponseStateDto(res);
 }
 
 export const QueryBusinessById = async (bid: number) => {
-    const res = await request.Fetch(`${url}/user/queryBusinessById?uid=${bid}`,'GET');
+    const res = await request.Fetch(`${url}/business/queryBusinessById?uid=${bid}`,'GET');
     return new BusinessResponseDto(res);
 }
 
@@ -40,6 +40,6 @@ export const UpdateBusiness = async (
         password: number;
     }
 ) => {
-    const res = await request.Fetch(`${url}/user/updateBusiness`,'PUT',body);
+    const res = await request.Fetch(`${url}/business/updateBusiness`,'PUT',body);
     return new ResponseStateDto(res);
 }
