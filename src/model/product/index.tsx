@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table, Form, Input, Button, Checkbox, Divider, FormInstance, Select, Space, Modal, message, Pagination } from 'antd';
-import { GoodsDto } from '../../static/response';
+import { GoodsDto } from '../../static/resType/product';
 import { DeleteOutlined, DownOutlined, EditOutlined, ExclamationCircleOutlined, UserAddOutlined } from '@ant-design/icons';
 import {GetGoodsList, DeleteGoods, UpdateGoods, AddGoods} from '../../static/request/product';
 import './index.css'
@@ -39,16 +39,12 @@ class GoodsManage extends React.Component<GoodsManageProps,GoodsManageState>{
     }
     columns = [
       {
-          title: 'Bid',
-          dataIndex: 'bid',
+        title: 'Gid',
+        dataIndex: 'gid',
       },
       {
            title: 'Count',
            dataIndex: 'count',
-      },
-      {
-           title: 'Gid',
-           dataIndex: 'gid',
       },
       {
         title: 'Introduction',
@@ -203,11 +199,17 @@ class GoodsManage extends React.Component<GoodsManageProps,GoodsManageState>{
       return(
         <Form
         name="basic"
-        labelCol={{ span: 4 }}
+        labelCol={{ span: 5 }}
         initialValues={{}}
         autoComplete="off"
         ref={this.AddformRef}
       >
+        <Form.Item
+            label="Bid"
+            name="bid"
+          >
+            <Input width="30px"/>
+          </Form.Item>
         <Form.Item
             label="Name"
             name="name"
@@ -314,7 +316,7 @@ class GoodsManage extends React.Component<GoodsManageProps,GoodsManageState>{
             <Modal title="Edit" visible={isshowEditModel} onOk={this.onConfirmEditModel} onCancel={this.onCancelEditModel} width="500px">
               {this.onRenderEditForm()}
             </Modal>
-            <Modal title="Add User" visible={isshowAddModel} onOk={this.onConfirmAddModel} onCancel={this.onCancelAddModel} width="500px">
+            <Modal title="Add Product" visible={isshowAddModel} onOk={this.onConfirmAddModel} onCancel={this.onCancelAddModel} width="500px">
               {this.onRenderAddForm()}
             </Modal>
             <Pagination defaultCurrent={1} current={currentPage} total={totalPage} pageSize={pageSize} onChange={this.onChangePageSize} style={{margin:'20px auto'}}/>

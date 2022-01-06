@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table, Form, Input, Button, Checkbox, Divider, FormInstance, Select, Space, Modal, message, Pagination } from 'antd';
-import { BusinessDto } from '../../static/response';
+import { BusinessDto } from '../../static/resType/business';
 import { DeleteOutlined, DownOutlined, EditOutlined, ExclamationCircleOutlined, UserAddOutlined } from '@ant-design/icons';
 import {GetBusinessList, DeleteBusiness, UpdateBusiness, AddBusiness} from '../../static/request/business';
 import './index.css'
@@ -266,7 +266,7 @@ class BusinessManage extends React.Component<BusinessManageProps,BusinessManageS
             <Modal title="Edit" visible={isshowEditModel} onOk={this.onConfirmEditModel} onCancel={this.onCancelEditModel} width="500px">
               {this.onRenderEditForm()}
             </Modal>
-            <Modal title="Add User" visible={isshowAddModel} onOk={this.onConfirmAddModel} onCancel={this.onCancelAddModel} width="500px">
+            <Modal title="Add Business" visible={isshowAddModel} onOk={this.onConfirmAddModel} onCancel={this.onCancelAddModel} width="500px">
               {this.onRenderAddForm()}
             </Modal>
             <Pagination defaultCurrent={1} current={currentPage} total={totalPage} pageSize={pageSize} onChange={this.onChangePageSize} style={{margin:'20px auto'}}/>

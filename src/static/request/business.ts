@@ -1,5 +1,6 @@
 import Request from "../request"
-import { BusinessResponseDto, ResponseStateDto, BusinessResponseArrayDto } from "../response";
+import { BusinessResponseDto, BusinessResponseArrayDto } from "../resType/business";
+import {ResponseStateDto} from '../response'
 const request = Request.GetInstance();
 const url = Request.GetUrl();
 
