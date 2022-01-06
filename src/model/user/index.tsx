@@ -95,7 +95,8 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
     async updateFormList(){
       const res = await GetUserList(1,8);
       this.setState({
-        formData: res.data
+        formData: res.data,
+        currentPage: 1
       })
     }
     showDeleteConfirm = (line: UserDto) => {

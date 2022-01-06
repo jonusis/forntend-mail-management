@@ -94,11 +94,24 @@ class App extends React.Component<AppProps,AppState>{
                       <Link to={`/product/type`}>商品分类</Link>
                     </Menu.Item>
                   </SubMenu>
-                  <SubMenu key="sub5" icon={<LineChartOutlined />} title="权限">
+                  <SubMenu key="sub5" icon={<LaptopOutlined />} title="地址">
                     <Menu.Item key="5-1">
-                      <Link to={`/admin/manage`}>后台账户管理</Link>
+                      <Link to={`/address/list`}>地址列表</Link>
                     </Menu.Item>
                     <Menu.Item key="5-2">
+                      <Link to={`/address/add`}>添加地址</Link>
+                    </Menu.Item>
+                  </SubMenu>
+                  <SubMenu key="sub6" icon={<LaptopOutlined />} title="物流">
+                    <Menu.Item key="6-1">
+                      <Link to={`/delivery/Statelist`}>物流状态列表</Link>
+                    </Menu.Item>
+                  </SubMenu>
+                  <SubMenu key="sub7" icon={<LineChartOutlined />} title="权限">
+                    <Menu.Item key="7-1">
+                      <Link to={`/admin/manage`}>后台账户管理</Link>
+                    </Menu.Item>
+                    <Menu.Item key="7-2">
                       <Link to={`/admin/setting`}>系统设置</Link>
                     </Menu.Item>
                   </SubMenu>
