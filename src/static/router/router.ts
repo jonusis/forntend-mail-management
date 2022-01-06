@@ -1,6 +1,9 @@
 import Login from '../../model/login/index';
 import User from '../../model/user/index';
 import Business from '../../model/business/index';
+import OrderList from '../../model/order/List/index';
+import OrderDetail from '../../model/order/List/detail';
+
 
 export interface RouteMoudle{
     path: string,
@@ -27,8 +30,12 @@ const routes: RouteMoudle[] = [
                         compoment: Business,
                     },
                     {
-                        path: "/order/manage",
-                        compoment: Business,
+                        path: "/order/list",
+                        compoment: OrderList,
+                    },
+                    {
+                        path: "/order/detail",
+                        compoment: OrderDetail,
                     },
                     {
                         path: "/order/setting",
