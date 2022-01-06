@@ -1,6 +1,7 @@
 import Login from '../../model/login/index';
 import User from '../../model/user/index';
 import Business from '../../model/business/index';
+import Address from '../../model/address/index';
 
 export interface RouteMoudle{
     path: string,
@@ -49,6 +50,10 @@ const routes: RouteMoudle[] = [
                     {
                         path: "/goods/delivery",
                         compoment: Business,
+                    },
+                    {
+                        path: "/address/list",
+                        compoment: Address,
                     },
                 ]
             },
