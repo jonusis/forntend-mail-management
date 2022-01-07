@@ -1,16 +1,12 @@
 import Login from '../../model/login/index';
 import User from '../../model/user/index';
 import Business from '../../model/business/index';
-<<<<<<< HEAD
 import Address from '../../model/address/index';
 import Product from '../../model/product/index'
+import ProductType from '../../model/product/type'
 import OrderList from '../../model/order/List/index';
 import OrderDetail from '../../model/order/List/detail';
 import OrderAdd from '../../model/order/Add/index';
-=======
-import OrderList from '../../model/order/List/index';
-import OrderDetail from '../../model/order/List/detail';
->>>>>>> idnly/first
 
 
 export interface RouteMoudle{
@@ -44,13 +40,10 @@ const routes: RouteMoudle[] = [
                     {
                         path: "/order/detail",
                         compoment: OrderDetail,
-<<<<<<< HEAD
                     },
                     {
                         path: "/order/add",
                         compoment: OrderAdd,
-=======
->>>>>>> idnly/first
                     },
                     {
                         path: "/order/setting",
@@ -80,6 +73,11 @@ const routes: RouteMoudle[] = [
                         path: "/product/list",
                         compoment: Product,
                     },
+                    {
+                        path: "/product/type",
+                        compoment: ProductType,
+                    },
+                    
                 ]
             },
         ]

@@ -1,11 +1,22 @@
 import Request from "../request"
 import { GoodsResponseDto, GoodsResponseArrayDto } from "../resType/product";
 import {ResponseStateDto} from '../response'
+import qs from "qs";
 const request = Request.GetInstance();
 const url = Request.GetUrl();
 
 export const GetGoodsList = async (pageNum?: number,pageSize?: number) => {
     const res = await request.Fetch(`${url}/goods/queryGoodsList?pageNum=${pageNum}&pageSize=${pageSize}`,'GET');
+    return new GoodsResponseArrayDto(res);
+}
+export const GetGoodsTypeList = async (
+    param:{pageNum?: number,
+    pageSize?: number,
+    category?:string,
+    type?:string
+    }
+    ) => {
+    const res = await request.Fetch(`${url}/goods/queryCategory?${qs.stringify(param)}`,'GET');
     return new GoodsResponseArrayDto(res);
 }
 
