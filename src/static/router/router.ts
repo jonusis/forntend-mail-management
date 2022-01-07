@@ -7,7 +7,7 @@ import ProductType from '../../model/product/type'
 import OrderList from '../../model/order/List/index';
 import OrderDetail from '../../model/order/List/detail';
 import OrderAdd from '../../model/order/Add/index';
-
+import Delivery from '../../model/delivery/index';
 
 export interface RouteMoudle{
     path: string,
@@ -77,7 +77,10 @@ const routes: RouteMoudle[] = [
                         path: "/product/type",
                         compoment: ProductType,
                     },
-                    
+                    {
+                        path: "/delivery/Statelist",
+                        compoment: Delivery,
+                    },
                 ]
             },
         ]
