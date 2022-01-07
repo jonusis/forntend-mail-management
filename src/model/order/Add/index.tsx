@@ -75,6 +75,7 @@ class OrderAdd extends React.Component<OrderAddProps,OrderAddState>{
         )
       }
       onRenderSecondAddForm = () => {
+          const {GoodsData,BusinessData} = this.state;
         return <>
         <Form.Item
             label="填写绑定的商品id"
@@ -89,7 +90,6 @@ class OrderAdd extends React.Component<OrderAddProps,OrderAddState>{
             />        
         </Form.Item>
         <Descriptions title="商家信息" style={{marginTop:'20px'}}>
-            {}
         </Descriptions>
         <Descriptions title="商品信息" style={{marginTop:'20px'}}>
         </Descriptions>
