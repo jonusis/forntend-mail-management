@@ -12,7 +12,7 @@ export const GetOrderList = async (pageNum?: number,pageSize?: number) => {
 
 export const AddOrder = async (
     body:{
-        oid: number,
+        oid?: number,
         bid: number,
         gid: number,
         introduction: string,

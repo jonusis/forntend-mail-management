@@ -79,16 +79,10 @@ class App extends React.Component<AppProps,AppState>{
                     <Menu.Item key="3-2">
                       <Link to={`/order/add`}>新建订单</Link>
                     </Menu.Item>
-                    <Menu.Item key="3-3">
-                      <Link to={`/order/returnApply`}>退换货请求</Link>
-                    </Menu.Item>
                   </SubMenu>
                   <SubMenu key="sub4" icon={<LaptopOutlined />} title="商品">
                     <Menu.Item key="4-1">
                       <Link to={`/product/list`}>商品列表</Link>
-                    </Menu.Item>
-                    <Menu.Item key="4-2">
-                      <Link to={`/product/add`}>添加商品</Link>
                     </Menu.Item>
                     <Menu.Item key="4-3">
                       <Link to={`/product/type`}>商品分类</Link>

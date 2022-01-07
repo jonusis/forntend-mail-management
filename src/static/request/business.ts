@@ -28,7 +28,7 @@ export const DeleteBusiness = async (bid: number) => {
 }
 
 export const QueryBusinessById = async (bid: number) => {
-    const res = await request.Fetch(`${url}/business/queryBusinessById?uid=${bid}`,'GET');
+    const res = await request.Fetch(`${url}/business/queryBusinessById?bid=${bid}`,'GET');
     return new BusinessResponseDto(res);
 }
 
