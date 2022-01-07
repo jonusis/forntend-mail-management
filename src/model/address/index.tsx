@@ -267,35 +267,12 @@ class AddressManage extends React.Component<AddressManageProps,AddressManageStat
             autoComplete="off"
           >
           <Form.Item
-            label="City"
-            name="city"
+            label="Uid"
+            name="uid"
           >
             <Input width="30px"/>
           </Form.Item>
-          <Form.Item
-              label="DetailedAddress"
-              name="detailedAddress"
-          >
-            <Input width="30px"/>
-          </Form.Item>
-          <Form.Item
-              label="Province"
-              name="province"
-          >
-            <Input width="30px"/>
-          </Form.Item>
-          <Form.Item
-              label="RceivierName"
-              name="receivierName"
-          >
-            <Input width="30px"/>
-          </Form.Item>
-          <Form.Item
-              label="Telephone"
-              name="telephone"
-          >
-            <Input width="30px"/>
-          </Form.Item>
+          
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <Button type="primary" htmlType="submit" onClick={this.onConfirmSearch}>
                 Search

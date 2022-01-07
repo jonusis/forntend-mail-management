@@ -77,7 +77,7 @@ class App extends React.Component<AppProps,AppState>{
                       <Link to={`/order/list`}>订单列表</Link>
                     </Menu.Item>
                     <Menu.Item key="3-2">
-                      <Link to={`/order/set`}>订单设置</Link>
+                      <Link to={`/order/add`}>新建订单</Link>
                     </Menu.Item>
                     <Menu.Item key="3-3">
                       <Link to={`/order/returnApply`}>退换货请求</Link>

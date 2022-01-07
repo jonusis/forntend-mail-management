@@ -248,12 +248,6 @@ class BusinessManage extends React.Component<BusinessManageProps,BusinessManageS
           >
             <Input width="30px"/>
           </Form.Item>
-          <Form.Item
-              label="Introduction"
-              name="introduction"
-          >
-            <Input width="30px"/>
-          </Form.Item>
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <Button type="primary" htmlType="submit" onClick={this.onConfirmSearch}>
                 Search

@@ -281,24 +281,6 @@ class GoodsManage extends React.Component<GoodsManageProps,GoodsManageState>{
             <Input width="30px"/>
           </Form.Item>
           <Form.Item
-            label="Bid"
-            name="bid"
-          >
-            <Input width="30px"/>
-          </Form.Item>
-          <Form.Item
-              label="Count"
-              name="count"
-          > 
-            <Input width="30px"/>
-          </Form.Item>
-          <Form.Item
-              label="Introduction"
-              name="introduction"
-          >
-            <Input width="30px"/>
-          </Form.Item>
-          <Form.Item
               label="Type"
               name="type"
           >

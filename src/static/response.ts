@@ -34,7 +34,7 @@ export class ResponseStateDto{
         this.data = message.data;
     }
 }
-interface UserBto{
+export interface UserBto{
     name: string;
     uid: number;
     account: string;
