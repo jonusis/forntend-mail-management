@@ -248,6 +248,12 @@ class BusinessManage extends React.Component<BusinessManageProps,BusinessManageS
           >
             <Input width="30px"/>
           </Form.Item>
+          <Form.Item
+              label="Introduction"
+              name="introduction"
+          >
+            <Input width="30px"/>
+          </Form.Item>
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <Button type="primary" htmlType="submit" onClick={this.onConfirmSearch}>
                 Search
@@ -260,7 +266,7 @@ class BusinessManage extends React.Component<BusinessManageProps,BusinessManageS
             <Modal title="Edit" visible={isshowEditModel} onOk={this.onConfirmEditModel} onCancel={this.onCancelEditModel} width="500px">
               {this.onRenderEditForm()}
             </Modal>
-            <Modal title="Add Business" visible={isshowAddModel} onOk={this.onConfirmAddModel} onCancel={this.onCancelAddModel} width="500px">
+            <Modal title="Add User" visible={isshowAddModel} onOk={this.onConfirmAddModel} onCancel={this.onCancelAddModel} width="500px">
               {this.onRenderAddForm()}
             </Modal>
             <Pagination defaultCurrent={1} current={currentPage} total={totalPage} pageSize={pageSize} onChange={this.onChangePageSize} style={{margin:'20px auto'}}/>
