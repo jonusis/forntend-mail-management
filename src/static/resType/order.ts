@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 import { UserBto, UserDto } from "../response";
 import {BusinessDto} from '../resType/business';
+=======
+import { BusinessDto, UserBto, UserDto } from "../response";
+>>>>>>> idnly/first
 
 interface OrderBto{
     oid: number,
@@ -49,6 +53,7 @@ export class OrdersResponseDto{
 }
 export class OrdersResponseDetailDto{
     data: OrdersDetailDto
+<<<<<<< HEAD
     msg: string
     code: number // 状态码
     constructor(message: any){
@@ -59,11 +64,14 @@ export class OrdersResponseDetailDto{
 }
 export class OrdersPay_GoodsDto{
     data: Pay_GoodsDto[]
+=======
+>>>>>>> idnly/first
     msg: string
     code: number // 状态码
     constructor(message: any){
         this.code = message.code;
         this.msg = message.msg;
+<<<<<<< HEAD
         this.data = message.data;
     }
 }
@@ -105,6 +113,11 @@ class DeliveryDto{
         this.uid = message.uid;
     }
 }
+=======
+        this.data = new OrdersDetailDto(message.data);
+    }
+}
+>>>>>>> idnly/first
 export class OrdersDetailDto{
     business: BusinessDto
     order: OrderDto
