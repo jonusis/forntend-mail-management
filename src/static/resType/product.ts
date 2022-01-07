@@ -6,6 +6,8 @@ interface GoodsBto{
 	name: string;
 	price: number;
     type: string;
+    category:string;
+    cid:number;
 }
 export class GoodsDto{
     bid: number;
@@ -15,6 +17,8 @@ export class GoodsDto{
 	name: string;
 	price: number;
     type: string;
+    category:string;
+    cid:number;
     constructor(goods:GoodsBto){
         this.count = goods.count;
         this.bid = goods.bid;
@@ -23,6 +27,8 @@ export class GoodsDto{
         this.price = goods.price;
         this.gid = goods.gid;
         this.type = goods.type;
+        this.category = goods.category;
+        this.cid = goods.cid;
     }
 }
 export class GoodsResponseDto{

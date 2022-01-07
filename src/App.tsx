@@ -92,9 +92,6 @@ class App extends React.Component<AppProps,AppState>{
                     <Menu.Item key="5-1">
                       <Link to={`/address/list`}>地址列表</Link>
                     </Menu.Item>
-                    <Menu.Item key="5-2">
-                      <Link to={`/address/add`}>添加地址</Link>
-                    </Menu.Item>
                   </SubMenu>
                   <SubMenu key="sub6" icon={<LaptopOutlined />} title="物流">
                     <Menu.Item key="6-1">

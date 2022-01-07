@@ -1,8 +1,9 @@
 import Login from '../../model/login/index';
 import User from '../../model/user/index';
 import Business from '../../model/business/index';
-// import Address from '../../model/address/index';
+import Address from '../../model/address/index';
 import Product from '../../model/product/index'
+import ProductType from '../../model/product/type'
 import OrderList from '../../model/order/List/index';
 import OrderDetail from '../../model/order/List/detail';
 import OrderAdd from '../../model/order/Add/index';
@@ -64,14 +65,19 @@ const routes: RouteMoudle[] = [
                         path: "/goods/delivery",
                         compoment: Business,
                     },
-                    // {
-                    //     path: "/address/list",
-                    //     compoment: Address,
-                    // },
+                    {
+                        path: "/address/list",
+                        compoment: Address,
+                    },
                     {
                         path: "/product/list",
                         compoment: Product,
                     },
+                    {
+                        path: "/product/type",
+                        compoment: ProductType,
+                    },
+                    
                 ]
             },
         ]
