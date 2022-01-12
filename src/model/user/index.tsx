@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Form, Input, Button, Checkbox, Divider, FormInstance, Select, Space, Modal, message, Pagination } from 'antd';
+import { Table, Form, Input, Button, Checkbox, Divider, FormInstance, Select, Space, Modal, message, Pagination ,Image} from 'antd';
 import {GetUserList, DeleteUser, UpdateUser, AddUser, SearchUserList} from '../../static/request/user';
 import {UserDto} from '../../static/response';
 import './index.css';
@@ -62,6 +62,30 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
       {
         title: 'Sex',
         dataIndex: 'sex',
+      },
+      {
+        title: 'QQ',
+        dataIndex: 'qq',
+      },
+      {
+        title: 'Tel',
+        dataIndex: 'tel',
+      },
+      {
+        title: 'Wechat',
+        dataIndex: 'wechat',
+      },
+      {
+        title: 'Headpicture',
+        width: '300px',
+        key: 'headpicture',
+        render: (line: UserDto) => {
+          return(
+          <Space size="middle">
+            <Image src={line.headPicture}></Image> 
+          </Space>
+        )
+      },
       },
       {
         title: 'Action',
@@ -185,6 +209,23 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
             <Input width="30px"/>
           </Form.Item>
           <Form.Item
+              label="Tel"
+              name="tel"
+          >
+            <Input width="30px"/>
+          </Form.Item>
+          <Form.Item
+              label="QQ"
+              name="qq"
+          ><Input width="30px"/>
+          </Form.Item>
+           <Form.Item
+              label="Wechat"
+              name="wechat"
+          >
+            <Input width="30px"/>
+          </Form.Item>
+          <Form.Item
               label="Sex"
               name="sex"
           >
@@ -226,6 +267,24 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
           <Form.Item
               label="Age"
               name="age"
+          >
+            <Input width="30px"/>
+          </Form.Item>
+          <Form.Item
+              label="Tel"
+              name="tel"
+          >
+            <Input width="30px"/>
+          </Form.Item>
+          <Form.Item
+              label="QQ"
+              name="qq"
+          >
+            <Input width="30px"/>
+          </Form.Item>
+           <Form.Item
+              label="Wechat"
+              name="wechat"
           >
             <Input width="30px"/>
           </Form.Item>
