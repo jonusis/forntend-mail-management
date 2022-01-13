@@ -1,11 +1,11 @@
 import React from 'react';
 import { Form, Input, Button, Checkbox, Divider, FormInstance, Card, Menu, Descriptions, PageHeader, Spin } from 'antd';
 import {QueryOrderDetailByoid, UpdateOrder, QueryPay_goodsByOid, QueryDeliveryByOid} from '../../../static/request/order';
+import {QueryGoodsByGid } from '../../../static/request/product';
 import './index.css';
 import { withRouter } from '../../../static/compoments/withRouter';
 import { NavigateFunction } from 'react-router-dom';
 import qs from 'qs';
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import { UserDto } from '../../../static/response';
 import { OrderDto } from '../../../static/resType/order';
 import { BusinessDto } from '../../../static/resType/business';
@@ -15,6 +15,7 @@ interface OrderDetailState{
     OrderInfo: OrderDto,
     DeliveryInfo: DeliveryDto[],
     Pay_goodsInfo: PayGoodsDto[],
+    GoodsInfo: any,
     oid: number,
     isLoading: boolean
 }
@@ -43,6 +44,7 @@ class OrderDetail extends React.Component<OrderDetailProps,OrderDetailState>{
             OrderInfo: {} as OrderDto,
             DeliveryInfo: [] as DeliveryDto[],
             Pay_goodsInfo: [] as PayGoodsDto[],
+            GoodsInfo: {},
             isLoading: false
         };
     }
@@ -55,6 +57,7 @@ class OrderDetail extends React.Component<OrderDetailProps,OrderDetailState>{
         const res = await QueryOrderDetailByoid(parseInt(oid));
         const res1 = await QueryPay_goodsByOid(parseInt(oid));
         const res2 = await QueryDeliveryByOid(parseInt(oid));
+        const res3 = await QueryGoodsByGid(res.data.order.gid);
         const Parray = res1.data.sort((a,b) => {
             return a.uid - b.uid;
         })
@@ -67,12 +70,13 @@ class OrderDetail extends React.Component<OrderDetailProps,OrderDetailState>{
             OrderInfo: res.data.order,
             Pay_goodsInfo: Parray,
             DeliveryInfo: Darray,
+            GoodsInfo: res3.data,
         })
         this.setState({isLoading: false})
     }
     render(){
         const {navigate} = this.props;
-        const {userListInfo,BusinessInfo,OrderInfo,DeliveryInfo,Pay_goodsInfo,isLoading} = this.state;
+        const {userListInfo,BusinessInfo,OrderInfo,DeliveryInfo,Pay_goodsInfo,isLoading,GoodsInfo} = this.state;
         console.log(userListInfo);
         return(
         <div style={{background:'white',padding:'10px 30px'}}>
@@ -100,6 +104,14 @@ class OrderDetail extends React.Component<OrderDetailProps,OrderDetailState>{
             <Descriptions.Item label="账户">{BusinessInfo.account}</Descriptions.Item>
             <Descriptions.Item label="名称">{BusinessInfo.name}</Descriptions.Item>
             <Descriptions.Item label="介绍">{BusinessInfo.introduction}</Descriptions.Item>
+        </Descriptions>
+        <Descriptions title="关联商品信息" style={{marginTop:'20px'}}>
+            <Descriptions.Item label="id">{GoodsInfo.gid}</Descriptions.Item>
+            <Descriptions.Item label="名称">{GoodsInfo.name}</Descriptions.Item>
+            <Descriptions.Item label="单价">{GoodsInfo.price}</Descriptions.Item>
+            <Descriptions.Item label="类型">{GoodsInfo.type}</Descriptions.Item>
+            <Descriptions.Item label="介绍">{GoodsInfo.introduction}</Descriptions.Item>
+            <Descriptions.Item label="库存">{GoodsInfo.count}</Descriptions.Item>
         </Descriptions>
         <Descriptions title="参与用户信息" style={{marginTop:'20px'}}></Descriptions>
         <div style={{display:'flex',flexDirection:'row',flexWrap:'wrap'}}>

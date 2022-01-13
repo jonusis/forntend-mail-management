@@ -10,7 +10,8 @@ export const GetGoodsList = async (pageNum?: number,pageSize?: number) => {
     return new GoodsResponseArrayDto(res);
 }
 export const GetGoodsTypeList = async (
-    param:{pageNum?: number,
+    param:{
+    pageNum?: number,
     pageSize?: number,
     category?:string,
     type?:string
@@ -45,7 +46,7 @@ export const QueryGoodsByBid = async (bid: number,pageNum?: number,pageSize?: nu
     return new GoodsResponseArrayDto(res);
 }
 export const QueryGoodsByGid = async (gid: number) => {
-    const res = await request.Fetch(`${url}/goods/queryGoodsByGid?uid=${gid}`,'GET');
+    const res = await request.Fetch(`${url}/goods/queryGoodsByGid?gid=${gid}`,'GET');
     return new GoodsResponseDto(res);
 }
 export const QueryGoodsByType = async (type: string,pageNum?: number,pageSize?: number) => {

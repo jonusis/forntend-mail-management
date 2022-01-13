@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Link, Routes, Route} from 'react-router-dom';
+import {BrowserRouter, Link, Routes, Route, Navigate} from 'react-router-dom';
 import routes,{RouteMoudle} from './static/router/router';
 import { Breadcrumb, Button, Layout, Menu } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined, HomeOutlined, ShoppingCartOutlined, LineChartOutlined } from '@ant-design/icons';
@@ -41,7 +41,7 @@ class App extends React.Component<AppProps,AppState>{
       const {hasLogin} = this.state;
         return <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login/>} />
+          <Route path="/login" element={<Login />}/>
         </Routes>
         <Layout style={{ minHeight: '100vh' }}>
             <div className="header">
@@ -51,7 +51,7 @@ class App extends React.Component<AppProps,AppState>{
               </div>
               <div className="loginMessage2">
                 <Link to={`/login`} style={{ cursor: 'pointer' }}>注销</Link>
-                <span> ｜ 欢迎你，xiaohpng</span>
+                <span> ｜ 欢迎你，管理员</span>
               </div>
             </div>
             <Layout>

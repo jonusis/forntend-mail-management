@@ -2,6 +2,7 @@ import Request from "../request"
 import { OrdersResponseDto, OrdersResponseArrayDto,OrdersResponseDetailDto, OrdersPay_GoodsDto, OrdersDeliveryDto } from "../resType/order";
 import {ResponseStateDto} from '../response'
 import { GoodsResponseArrayDto, GoodsResponseDto } from "../resType/product";
+import qs from "qs";
 const request = Request.GetInstance();
 const url = Request.GetUrl();
 
@@ -78,4 +79,13 @@ export const QueryDeliveryByOid = async (oid: number) => {
 export const QueryGoodsByGid = async (gid: number) => {
     const res = await request.Fetch(`${url}/goods/queryGoodsByGid?gid=${gid}`,'GET');
     return new GoodsResponseDto(res);
+}
+export const SearchOrderList = async (
+    param:{
+    state?: string,
+    total_price?: string,
+    }
+    ) => {
+    const res = await request.Fetch(`${url}/orders/searchOrder?${qs.stringify(param)}`,'GET');
+    return new OrdersResponseArrayDto(res);
 }

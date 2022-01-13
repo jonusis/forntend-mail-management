@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table, Form, Input, Button, Checkbox, Divider, FormInstance, Select, Space, Modal, message, Pagination } from 'antd';
-import {GetUserList, DeleteUser, UpdateUser, AddUser} from '../../static/request/user';
+import {GetUserList, DeleteUser, UpdateUser, AddUser, SearchUserList} from '../../static/request/user';
 import {UserDto} from '../../static/response';
 import './index.css';
 import { DeleteOutlined, DownOutlined, EditOutlined, ExclamationCircleOutlined, UserAddOutlined } from '@ant-design/icons';
@@ -24,6 +24,7 @@ const { Option } = Select;
 class UserManage extends React.Component<UserManageProps,UserManageState>{
     EditformRef = React.createRef<FormInstance>();
     AddformRef = React.createRef<FormInstance>();
+    SearchformRef = React.createRef<FormInstance>();
     constructor(props: UserManageProps){
         super(props);
         this.state = {
@@ -190,8 +191,8 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
           <Select style={{ width: 120 }}>
           <Option value="0">女</Option>
           <Option value="1">男</Option>
-              </Select>
-              </Form.Item>
+          </Select>
+        </Form.Item>
       </Form>
       )
     }
@@ -240,8 +241,16 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
       </Form>
       )
     }
-    onConfirmSearch = () => {
-
+    onConfirmSearch = async () => {
+      const value = this.SearchformRef.current?.getFieldsValue(true);
+      const param = {name:value.Name,account:value.account,age:value.age,sex:value.sex};
+      const res = await SearchUserList(param);
+      this.setState({
+          formData: res.data,
+          currentPage: res.currentpage,
+          totalPage: res.maxPageSize*8,
+          pageSize: 8,
+      })
     }
     onClickAddUser = () => {
       this.setState({isshowAddModel: true})
@@ -264,30 +273,31 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
             name="basic"
             layout="inline"
             autoComplete="off"
+            ref= {this.SearchformRef}
           >
           <Form.Item
             label="Name"
             name="Name"
           >
-            <Input width="30px"/>
+            <Input allowClear width="30px"/>
           </Form.Item>
           <Form.Item
               label="Account"
               name="account"
           >
-            <Input width="30px"/>
+            <Input allowClear width="30px"/>
           </Form.Item>
           <Form.Item
               label="Age"
               name="age"
           >
-            <Input width="30px"/>
+            <Input allowClear width="30px"/>
           </Form.Item>
           <Form.Item
               label="Sex"
               name="sex"
           >
-          <Select style={{ width: 120 }}>
+          <Select allowClear style={{ width: 120 }}>
             <Option value="0">女</Option>
             <Option value="1">男</Option>
           </Select>

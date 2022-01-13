@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table, Form, Input, Button, Checkbox, Divider, FormInstance, Select, Space, Modal, message, Pagination, TimePicker } from 'antd';
-import {GetOrderList, DeleteOrder, UpdateOrder, AddOrder} from '../../../static/request/order';
+import {GetOrderList, DeleteOrder, UpdateOrder, AddOrder,SearchOrderList} from '../../../static/request/order';
 import {OrderDto} from '../../../static/resType/order';
 import './index.css';
 import { CaretRightOutlined, DeleteOutlined, DownOutlined, EditOutlined, ExclamationCircleOutlined, UserAddOutlined } from '@ant-design/icons';
@@ -25,6 +25,7 @@ const { Option } = Select;
 class OrderManage extends React.Component<OrderManageProps,OrderManageState>{
     EditformRef = React.createRef<FormInstance>();
     AddformRef = React.createRef<FormInstance>();
+    SearchformRef = React.createRef<FormInstance>();
     constructor(props: OrderManageProps){
         super(props);
         this.state = {
@@ -120,8 +121,16 @@ class OrderManage extends React.Component<OrderManageProps,OrderManageState>{
     onCancelAddModel = () => {
       this.setState({isshowAddModel: false});
     }
-    onConfirmSearch = () => {
-
+    onConfirmSearch = async () => {
+      const value = this.SearchformRef.current?.getFieldsValue(true);
+      const param = {state:value.state,total_price:value.total_price};
+      const res = await SearchOrderList(param);
+      this.setState({
+          formData: res.data,
+          currentPage: res.currentpage,
+          totalPage: res.maxPageSize*8,
+          pageSize: 8,
+      })
     }
     onClickAddOrder = () => {
       this.setState({isshowAddModel: true})
@@ -144,24 +153,19 @@ class OrderManage extends React.Component<OrderManageProps,OrderManageState>{
             name="basic"
             layout="inline"
             autoComplete="off"
+            ref={this.SearchformRef}
           >
           <Form.Item
             label="state"
             name="state"
           >
-            <Input width="30px"/>
+            <Input width="30px" allowClear/>
           </Form.Item>
           <Form.Item
               label="total_price"
               name="total_price"
           >
-            <Input width="30px"/>
-          </Form.Item>
-          <Form.Item
-              label="Time"
-              name="Time"
-          >
-            <TimePicker.RangePicker />
+            <Input width="30px" allowClear/>
           </Form.Item>
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <Button type="primary" htmlType="submit" onClick={this.onConfirmSearch}>

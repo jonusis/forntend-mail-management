@@ -1,3 +1,4 @@
+import qs from "qs";
 import Request from "../request"
 import { UserResponseDto, ResponseStateDto, UserResponseArrayDto } from "../response";
 const request = Request.GetInstance();
@@ -43,4 +44,16 @@ export const UpdateUser = async (
 ) => {
     const res = await request.Fetch(`${url}/user/updateUser`,'PUT',body);
     return new ResponseStateDto(res);
+}
+
+export const SearchUserList = async (
+    param:{
+    name?: string,
+    account?: string,
+    age?:string,
+    sex?:string
+    }
+    ) => {
+    const res = await request.Fetch(`${url}/user/searchUser?${qs.stringify(param)}`,'GET');
+    return new UserResponseArrayDto(res);
 }
