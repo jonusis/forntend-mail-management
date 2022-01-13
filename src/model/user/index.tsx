@@ -1,9 +1,11 @@
 import React from 'react';
-import { Table, Form, Input, Button, Checkbox, Divider, FormInstance, Select, Space, Modal, message, Pagination } from 'antd';
+import { Table, Form, Input, Button, Checkbox, Divider, FormInstance, Select, Space, Modal, message, Pagination ,Image, Avatar, Upload} from 'antd';
 import {GetUserList, DeleteUser, UpdateUser, AddUser, SearchUserList} from '../../static/request/user';
 import {UserDto} from '../../static/response';
 import './index.css';
-import { DeleteOutlined, DownOutlined, EditOutlined, ExclamationCircleOutlined, UserAddOutlined } from '@ant-design/icons';
+import { DeleteOutlined, DownOutlined, EditOutlined, ExclamationCircleOutlined, UploadOutlined, UserAddOutlined } from '@ant-design/icons';
+import { UploadChangeParam } from 'antd/lib/upload';
+import { RcFile, UploadFile } from 'antd/lib/upload/interface';
 const { confirm } = Modal;
 interface UserManageState{
   formData: UserDto[]
@@ -15,6 +17,7 @@ interface UserManageState{
   currentPage: number
   totalPage: number
   pageSize: number
+  updateUrl: string
 }
 interface UserManageProps{
     
@@ -36,7 +39,8 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
           isshowAddModel: false,
           currentPage: 0,
           totalPage: 50,
-          pageSize: 6
+          pageSize: 6,
+          updateUrl: ""
         };
     }
     columns = [
@@ -62,6 +66,30 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
       {
         title: 'Sex',
         dataIndex: 'sex',
+      },
+      {
+        title: 'QQ',
+        dataIndex: 'qq',
+      },
+      {
+        title: 'Tel',
+        dataIndex: 'tel',
+      },
+      {
+        title: 'Wechat',
+        dataIndex: 'wechat',
+      },
+      {
+        title: 'Headpicture',
+        width: '300px',
+        key: 'headpicture',
+        render: (line: UserDto) => {
+          return(
+          <Space size="middle">
+            <Avatar shape="square" size={64} icon={<Image src={line.headPicture}></Image>} /> 
+          </Space>
+        )
+      },
       },
       {
         title: 'Action',
@@ -127,6 +155,7 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
     onConfirmEditModel = async () => {
       const data = this.EditformRef.current?.getFieldsValue(true);
       data.sex = data.sex === '女' ? '0' : '1';
+      data.headPicture = data.headPicture.file.response.data;
       this.setState({isshowEditModel: false,isLoading: true});
       const res = await UpdateUser(data);
       if(res.code == 200){
@@ -185,6 +214,23 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
             <Input width="30px"/>
           </Form.Item>
           <Form.Item
+              label="Tel"
+              name="tel"
+          >
+            <Input width="30px"/>
+          </Form.Item>
+          <Form.Item
+              label="QQ"
+              name="qq"
+          ><Input width="30px"/>
+          </Form.Item>
+           <Form.Item
+              label="Wechat"
+              name="wechat"
+          >
+            <Input width="30px"/>
+          </Form.Item>
+          <Form.Item
               label="Sex"
               name="sex"
           >
@@ -192,6 +238,19 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
           <Option value="0">女</Option>
           <Option value="1">男</Option>
           </Select>
+        </Form.Item>
+        <Form.Item
+              label="HeadPicture"
+              name="headPicture"
+          >
+            <Upload
+            action="http://10.189.1.135:8080/file/"
+            listType="picture"
+            headers={{"mode":"cors"}}
+            className="upload-list-inline"
+          >
+            <Button icon={<UploadOutlined />}>Upload</Button>
+          </Upload>
         </Form.Item>
       </Form>
       )
@@ -226,6 +285,24 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
           <Form.Item
               label="Age"
               name="age"
+          >
+            <Input width="30px"/>
+          </Form.Item>
+          <Form.Item
+              label="Tel"
+              name="tel"
+          >
+            <Input width="30px"/>
+          </Form.Item>
+          <Form.Item
+              label="QQ"
+              name="qq"
+          >
+            <Input width="30px"/>
+          </Form.Item>
+           <Form.Item
+              label="Wechat"
+              name="wechat"
           >
             <Input width="30px"/>
           </Form.Item>
