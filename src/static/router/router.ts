@@ -8,6 +8,8 @@ import OrderList from '../../model/order/List/index';
 import OrderDetail from '../../model/order/List/detail';
 import OrderAdd from '../../model/order/Add/index';
 import Delivery from '../../model/delivery/index';
+import Buy from '../../model/order/Buy/index';
+import Car from '../../model/order/Car/index';
 
 export interface RouteMoudle{
     path: string,
@@ -73,6 +75,14 @@ const routes: RouteMoudle[] = [
             {
                 path: "/delivery/Statelist",
                 compoment: Delivery,
+            },
+            {
+                path: "/order/buyList",
+                compoment: Buy,
+            },
+            {
+                path: "/order/carList",
+                compoment: Car,
             },
         ]
     }
