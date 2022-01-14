@@ -314,7 +314,20 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
           <Option value="0">女</Option>
           <Option value="1">男</Option>
               </Select>
-              </Form.Item>
+          </Form.Item>
+          <Form.Item
+              label="HeadPicture"
+              name="headPicture"
+          >
+            <Upload
+            action="http://10.189.1.135:8080/file/"
+            listType="picture"
+            headers={{"mode":"cors"}}
+            className="upload-list-inline"
+          >
+            <Button icon={<UploadOutlined />}>Upload</Button>
+          </Upload>
+        </Form.Item>
       </Form>
       )
     }

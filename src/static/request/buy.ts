@@ -6,7 +6,7 @@ const request = Request.GetInstance();
 const url = Request.GetUrl();
 
 export const GetBuyList = async (pageNum?: number,pageSize?: number) => {
-    const res = await request.Fetch(`${url}/order/buy/list?pageNum=${pageNum}&pageSize=${pageSize}`,'GET');
+    const res = await request.Fetch(`${url}/orderbuy/getOrderBuyList?pageNum=${pageNum}&pageSize=${pageSize}`,'GET');
     return new BuyResponseArrayDto(res);
 }
 
@@ -29,17 +29,17 @@ export const AddBuy = async (
         wechat: string;
     }
 ) => {
-    const res = await request.Fetch(`${url}/Buy/addBuy`,'POST',body);
+    const res = await request.Fetch(`${url}/orderbuy/addOrderBuy`,'POST',body);
     return new ResponseStateDto(res);
 }
 
-export const DeleteBuy = async (uid: number) => {
-    const res = await request.Fetch(`${url}/Buy/deleteBuy?uid=${uid}`,'DELETE');
+export const DeleteBuy = async (orderbuyID: number) => {
+    const res = await request.Fetch(`${url}/orderbuy/deleteOrderBuy?orderbuyID=${orderbuyID}`,'DELETE');
     return new ResponseStateDto(res);
 }
 
 export const QueryBuyById = async (uid: number) => {
-    const res = await request.Fetch(`${url}/Buy/queryBuyById?uid=${uid}`,'GET');
+    const res = await request.Fetch(`${url}/orderbuy/queryOrderBuyListById?uid=${uid}`,'GET');
     return new BuyResponseDto(res);
 }
 
@@ -62,15 +62,15 @@ export const UpdateBuy = async (
         wechat: string;
     }
 ) => {
-    const res = await request.Fetch(`${url}/Buy/updateBuy`,'PUT',body);
+    const res = await request.Fetch(`${url}/orderbuy/updateOrderBuy`,'PUT',body);
     return new ResponseStateDto(res);
 }
 
 export const SearchBuyList = async (
     param:{
-    id?: number,
+    userID?: string,
     }
     ) => {
-    const res = await request.Fetch(`${url}/Buy/searchBuy?${qs.stringify(param)}`,'GET');
+    const res = await request.Fetch(`${url}/orderbuy/queryOrderBuyListById?${qs.stringify(param)}`,'GET');
     return new BuyResponseArrayDto(res);
 }

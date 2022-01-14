@@ -48,6 +48,10 @@ class CarManage extends React.Component<CarManageProps,CarManageState>{
           dataIndex: 'id',
       },
       {
+        title: 'PostID',
+        dataIndex: 'postID',
+      },
+      {
           title: 'Content',
           dataIndex: 'content',
           width: '300px'
@@ -97,10 +101,6 @@ class CarManage extends React.Component<CarManageProps,CarManageState>{
         render: (line: CarDto) => {
               return(
               <Space size="middle">
-                <Button onClick={async () => {
-                  await this.setState({isEditData:line}); 
-                  this.showEditConfirm();
-                  }}><EditOutlined />edit</Button>
                 <Button onClick={() => this.showDeleteConfirm(line)}><DeleteOutlined />Delete</Button>
               </Space>
             )
@@ -235,12 +235,6 @@ class CarManage extends React.Component<CarManageProps,CarManageState>{
         autoComplete="off"
         ref={this.AddformRef}
       >
-         <Form.Item
-            label="Content"
-            name="content"
-          >
-            <Input width="30px"/>
-          </Form.Item>
           <Form.Item
               label="Full"
               name="full"
@@ -281,7 +275,7 @@ class CarManage extends React.Component<CarManageProps,CarManageState>{
     }
     onConfirmSearch = async () => {
       const value = this.SearchformRef.current?.getFieldsValue(true);
-      const param = {id:value.id};
+      const param = {userID:value.postID};
       const res = await SearchCarList(param);
       this.setState({
           formData: res.data,
@@ -314,8 +308,8 @@ class CarManage extends React.Component<CarManageProps,CarManageState>{
             ref= {this.SearchformRef}
           >
           <Form.Item
-            label="Id"
-            name="id"
+            label="PostID"
+            name="postID"
           >
             <Input allowClear width="30px"/>
           </Form.Item>
@@ -325,7 +319,6 @@ class CarManage extends React.Component<CarManageProps,CarManageState>{
               </Button>
             </Form.Item>
       </Form>
-          <Button style={{float:'right'}} onClick={this.onClickAddCar}><UserAddOutlined />add Car</Button>
         </div>
           <Table columns={this.columns} loading={isLoading} dataSource={formData } pagination={false}/>
           <Modal title="Edit" visible={isshowEditModel} onOk={this.onConfirmEditModel} onCancel={this.onCancelEditModel} width="500px">
