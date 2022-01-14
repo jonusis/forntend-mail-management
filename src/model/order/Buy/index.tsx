@@ -48,6 +48,10 @@ class BuyManage extends React.Component<BuyManageProps,BuyManageState>{
           dataIndex: 'id',
       },
       {
+        title: 'PostID',
+        dataIndex: 'postID',
+      },
+      {
           title: 'Content',
           dataIndex: 'content',
           width: '300px'
@@ -101,10 +105,6 @@ class BuyManage extends React.Component<BuyManageProps,BuyManageState>{
         render: (line: BuyDto) => {
               return(
               <Space size="middle">
-                <Button onClick={async () => {
-                  await this.setState({isEditData:line}); 
-                  this.showEditConfirm();
-                  }}><EditOutlined />edit</Button>
                 <Button onClick={() => this.showDeleteConfirm(line)}><DeleteOutlined />Delete</Button>
               </Space>
             )
@@ -285,7 +285,7 @@ class BuyManage extends React.Component<BuyManageProps,BuyManageState>{
     }
     onConfirmSearch = async () => {
       const value = this.SearchformRef.current?.getFieldsValue(true);
-      const param = {id:value.id};
+      const param = {userID:value.postID};
       const res = await SearchBuyList(param);
       this.setState({
           formData: res.data,
@@ -318,20 +318,8 @@ class BuyManage extends React.Component<BuyManageProps,BuyManageState>{
             ref= {this.SearchformRef}
           >
           <Form.Item
-            label="Id"
-            name="id"
-          >
-            <Input allowClear width="30px"/>
-          </Form.Item>
-          <Form.Item
-              label="Heading"
-              name="heading"
-          >
-            <Input allowClear width="30px"/>
-          </Form.Item>
-          <Form.Item
-              label="Location"
-              name="location"
+            label="PostID"
+            name="postID"
           >
             <Input allowClear width="30px"/>
           </Form.Item>
@@ -341,7 +329,6 @@ class BuyManage extends React.Component<BuyManageProps,BuyManageState>{
               </Button>
             </Form.Item>
       </Form>
-          <Button style={{float:'right'}} onClick={this.onClickAddBuy}><UserAddOutlined />add Buy</Button>
         </div>
           <Table columns={this.columns} loading={isLoading} dataSource={formData } pagination={false}/>
           <Modal title="Edit" visible={isshowEditModel} onOk={this.onConfirmEditModel} onCancel={this.onCancelEditModel} width="500px">

@@ -6,7 +6,7 @@ const request = Request.GetInstance();
 const url = Request.GetUrl();
 
 export const GetCarList = async (pageNum?: number,pageSize?: number) => {
-    const res = await request.Fetch(`${url}/order/Car/list?pageNum=${pageNum}&pageSize=${pageSize}`,'GET');
+    const res = await request.Fetch(`${url}/ordercar/queryOrderCarList?pageNum=${pageNum}&pageSize=${pageSize}`,'GET');
     return new CarResponseArrayDto(res);
 }
 
@@ -31,13 +31,13 @@ export const AddCar = async (
     return new ResponseStateDto(res);
 }
 
-export const DeleteCar = async (uid: number) => {
-    const res = await request.Fetch(`${url}/Car/deleteCar?uid=${uid}`,'DELETE');
+export const DeleteCar = async (ordercarID: number) => {
+    const res = await request.Fetch(`${url}/ordercar/deleteOrderCar?ordercarID=${ordercarID}`,'DELETE');
     return new ResponseStateDto(res);
 }
 
-export const QueryCarById = async (uid: number) => {
-    const res = await request.Fetch(`${url}/Car/queryCarById?uid=${uid}`,'GET');
+export const QueryCarById = async (userID: number) => {
+    const res = await request.Fetch(`${url}/ordercar/queryOrderCarListById?userID=${userID}`,'GET');
     return new CarResponseDto(res);
 }
 
@@ -64,9 +64,9 @@ export const UpdateCar = async (
 
 export const SearchCarList = async (
     param:{
-    id?: number,
+    userID?: number,
     }
     ) => {
-    const res = await request.Fetch(`${url}/Car/searchCar?${qs.stringify(param)}`,'GET');
+    const res = await request.Fetch(`${url}/ordercar/queryOrderCarListById?${qs.stringify(param)}`,'GET');
     return new CarResponseArrayDto(res);
 }
