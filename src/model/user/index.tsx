@@ -154,8 +154,8 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
     }
     onConfirmEditModel = async () => {
       const data = this.EditformRef.current?.getFieldsValue(true);
-      data.sex = data.sex === '女' ? '0' : '1';
-      data.headPicture = data.headPicture.file.response.data;
+      data.headPicture = data.headPicture.file ? data.headPicture.file.response.data : null;
+      data.sex = data.sex === '男' ? '1' : '0';
       this.setState({isshowEditModel: false,isLoading: true});
       const res = await UpdateUser(data);
       if(res.code == 200){
@@ -171,7 +171,7 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
     }
     onConfirmAddModel = async () => {
       const data = this.AddformRef.current?.getFieldsValue(true);
-      data.sex = data.sex === '女' ? '0' : '1';
+      data.sex = data.sex === '男' ? '1' : '0';
       this.setState({isshowAddModel: false,isLoading: true});
       const res = await AddUser(data);
       if(res.code == 200){
