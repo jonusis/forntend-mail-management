@@ -1,6 +1,6 @@
 import qs from "qs";
 import Request from "../request"
-import { BuyResponseDto, BuyResponseArrayDto } from "../resType/buy";
+import { BuyResponseDto, BuyResponseArrayDto, BuyDetailResponseDto } from "../resType/buy";
 import {ResponseStateDto} from '../response'
 const request = Request.GetInstance();
 const url = Request.GetUrl();
@@ -73,4 +73,13 @@ export const SearchBuyList = async (
     ) => {
     const res = await request.Fetch(`${url}/orderbuy/queryOrderBuyListById?${qs.stringify(param)}`,'GET');
     return new BuyResponseArrayDto(res);
+}
+
+export const getOrderbuyDetailByid = async (
+    param:{
+        orderID: number,
+    }
+    ) => {
+    const res = await request.Fetch(`${url}/orderbuy/getOrderbuyDetailByid?${qs.stringify(param)}`,'GET');
+    return new BuyDetailResponseDto(res);
 }

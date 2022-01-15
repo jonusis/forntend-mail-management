@@ -10,6 +10,7 @@ import OrderAdd from '../../model/order/Add/index';
 import Delivery from '../../model/delivery/index';
 import Buy from '../../model/order/Buy/index';
 import Car from '../../model/order/Car/index';
+import BuyDetail from '../../model/order/Buy/detail';
 
 export interface RouteMoudle{
     path: string,
@@ -77,13 +78,17 @@ const routes: RouteMoudle[] = [
                 compoment: Delivery,
             },
             {
+                path: "/order/buyDetail",
+                compoment: BuyDetail,
+            },
+            {
                 path: "/order/buyList",
                 compoment: Buy,
             },
             {
                 path: "/order/carList",
                 compoment: Car,
-            },
+            }
         ]
     }
 ]

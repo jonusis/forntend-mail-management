@@ -3,9 +3,10 @@ import { Table, Form, Input, Button, Checkbox, Divider, FormInstance, Select, Sp
 import {GetBuyList, DeleteBuy, UpdateBuy, AddBuy, SearchBuyList} from '../../../static/request/buy';
 import {BuyDto} from '../../../static/resType/buy';
 import './index.css';
-import { DeleteOutlined, DownOutlined, EditOutlined, ExclamationCircleOutlined, UploadOutlined, UserAddOutlined } from '@ant-design/icons';
+import { CaretRightOutlined, DeleteOutlined, DownOutlined, EditOutlined, ExclamationCircleOutlined, UploadOutlined, UserAddOutlined } from '@ant-design/icons';
 import { UploadChangeParam } from 'antd/lib/upload';
 import { RcFile, UploadFile } from 'antd/lib/upload/interface';
+import { Navigate } from 'react-router';
 const { confirm } = Modal;
 interface BuyManageState{
   formData: BuyDto[]
@@ -18,6 +19,7 @@ interface BuyManageState{
   totalPage: number
   pageSize: number
   updateUrl: string
+  isToDetail: boolean
 }
 interface BuyManageProps{
     
@@ -39,7 +41,8 @@ class BuyManage extends React.Component<BuyManageProps,BuyManageState>{
           currentPage: 0,
           totalPage: 50,
           pageSize: 6,
-          updateUrl: ""
+          updateUrl: "",
+          isToDetail: false
         };
     }
     columns = [
@@ -87,24 +90,13 @@ class BuyManage extends React.Component<BuyManageProps,BuyManageState>{
         dataIndex: 'numNeed',
       },
       {
-        title: 'QQ',
-        dataIndex: 'qq',
-      },
-      {
-        title: 'Tel',
-        dataIndex: 'tel',
-      },
-      {
-        title: 'Wechat',
-        dataIndex: 'wechat',
-      },
-      {
         title: 'Action',
         key: 'action',
         width: '300px',
         render: (line: BuyDto) => {
               return(
               <Space size="middle">
+                <Button onClick={async () => {await this.setState({isEditData:line}); this.linkToDetail();}}>Detail<CaretRightOutlined /></Button>
                 <Button onClick={() => this.showDeleteConfirm(line)}><DeleteOutlined />Delete</Button>
               </Space>
             )
@@ -123,6 +115,9 @@ class BuyManage extends React.Component<BuyManageProps,BuyManageState>{
     async componentDidUpdate(){
       await this.EditformRef.current?.resetFields();
       await this.AddformRef.current?.resetFields();
+    }
+    linkToDetail = () => {
+      this.setState({isToDetail: true});
     }
     async updateFormList(){
       const res = await GetBuyList(1,8);
@@ -307,7 +302,7 @@ class BuyManage extends React.Component<BuyManageProps,BuyManageState>{
       })
     }
     render(){
-      const {formData, isLoading,isshowEditModel,isshowAddModel,totalPage,currentPage,pageSize} = this.state;
+      const {formData, isLoading,isshowEditModel,isshowAddModel,totalPage,currentPage,pageSize,isToDetail,isEditData} = this.state;
         return(
         <div style={{background:'white',padding:'10px 30px'}}>
           <div className="searchForm">
@@ -338,6 +333,9 @@ class BuyManage extends React.Component<BuyManageProps,BuyManageState>{
             {this.onRenderAddForm()}
           </Modal>
           <Pagination defaultCurrent={1} current={currentPage} total={totalPage} pageSize={pageSize} onChange={this.onChangePageSize} style={{margin:'20px auto'}}/>
+          { isToDetail && (
+            <Navigate to={`/order/buyDetail?oid=${isEditData.id}`} replace={true} />
+          )}
       </div>
       )
     }

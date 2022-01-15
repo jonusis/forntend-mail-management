@@ -60,6 +60,16 @@ export class BuyResponseDto{
         this.data = new BuyDto(message.data);
     }
 }
+export class BuyDetailResponseDto{
+    data: any
+    msg: string
+    code: number // 状态码
+    constructor(message: BuyResDto){
+        this.code = message.code;
+        this.msg = message.msg;
+        this.data = message.data;
+    }
+}
 export class  BuyResponseArrayDto{
     data: BuyDto[]
     msg: string
