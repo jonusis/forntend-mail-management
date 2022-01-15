@@ -55,49 +55,49 @@ class BuyManage extends React.Component<BuyManageProps,BuyManageState>{
         dataIndex: 'postID',
       },
       {
-          title: 'Content',
+          title: '内容',
           dataIndex: 'content',
           width: '300px'
   
       },
       {
-        title: 'Heading',
+        title: '标题',
         dataIndex: 'heading',
         width: '300px'
       },
       {
-        title: 'Full',
+        title: '是否拼满',
         dataIndex: 'full',
       },
       {
-        title: 'Datetime',
+        title: '发起时间',
         dataIndex: 'datetime',
       },
       {
-        title: 'Kind',
+        title: '类别',
         dataIndex: 'kind',
       },
       {
-        title: 'Location',
+        title: '地点',
         dataIndex: 'location',
       },
       {
-        title: 'NumExist',
+        title: '剩余人数',
         dataIndex: 'numExist',
       },
       {
-        title: 'NumNeed',
+        title: '需要人数',
         dataIndex: 'numNeed',
       },
       {
-        title: 'Action',
+        title: '操作',
         key: 'action',
         width: '300px',
         render: (line: BuyDto) => {
               return(
               <Space size="middle">
-                <Button onClick={async () => {await this.setState({isEditData:line}); this.linkToDetail();}}>Detail<CaretRightOutlined /></Button>
-                <Button onClick={() => this.showDeleteConfirm(line)}><DeleteOutlined />Delete</Button>
+                <Button onClick={async () => {await this.setState({isEditData:line}); this.linkToDetail();}}>订单详情<CaretRightOutlined /></Button>
+                <Button onClick={() => this.showDeleteConfirm(line)}><DeleteOutlined />删除</Button>
               </Space>
             )
           },
@@ -320,7 +320,7 @@ class BuyManage extends React.Component<BuyManageProps,BuyManageState>{
           </Form.Item>
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <Button type="primary" htmlType="submit" onClick={this.onConfirmSearch}>
-                Search
+                搜索
               </Button>
             </Form.Item>
       </Form>

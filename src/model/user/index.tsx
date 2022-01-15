@@ -49,22 +49,22 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
           dataIndex: 'uid',
       },
       {
-          title: 'Name',
+          title: '名字',
           dataIndex: 'name',
           width: '300px'
   
       },
       {
-        title: 'Account',
+        title: '账户',
         dataIndex: 'account',
         width: '300px'
       },
       {
-        title: 'Age',
+        title: '年龄',
         dataIndex: 'age',
       },
       {
-        title: 'Sex',
+        title: '性别',
         dataIndex: 'sex',
       },
       {
@@ -80,7 +80,7 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
         dataIndex: 'wechat',
       },
       {
-        title: 'Headpicture',
+        title: '头像',
         width: '300px',
         key: 'headpicture',
         render: (line: UserDto) => {
@@ -92,7 +92,7 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
       },
       },
       {
-        title: 'Action',
+        title: '操作',
         key: 'action',
         width: '300px',
         render: (line: UserDto) => {
@@ -101,8 +101,8 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
                 <Button onClick={async () => {
                   await this.setState({isEditData:line}); 
                   this.showEditConfirm();
-                  }}><EditOutlined />edit</Button>
-                <Button onClick={() => this.showDeleteConfirm(line)}><DeleteOutlined />Delete</Button>
+                  }}><EditOutlined />编辑</Button>
+                <Button onClick={() => this.showDeleteConfirm(line)}><DeleteOutlined />删除</Button>
               </Space>
             )
           },
@@ -265,25 +265,25 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
         ref={this.AddformRef}
       >
         <Form.Item
-            label="Name"
+            label="名字"
             name="name"
           >
             <Input width="30px"/>
           </Form.Item>
           <Form.Item
-              label="Account"
+              label="账户"
               name="account"
           >
             <Input width="30px"/>
           </Form.Item>
           <Form.Item
-              label="Password"
+              label="密码"
               name="password"
           >
             <Input width="30px"/>
           </Form.Item>
           <Form.Item
-              label="Age"
+              label="年龄"
               name="age"
           >
             <Input width="30px"/>
@@ -307,7 +307,7 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
             <Input width="30px"/>
           </Form.Item>
           <Form.Item
-              label="Sex"
+              label="性别"
               name="sex"
           >
           <Select style={{ width: 120 }}>
@@ -366,25 +366,25 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
             ref= {this.SearchformRef}
           >
           <Form.Item
-            label="Name"
+            label="名字"
             name="Name"
           >
             <Input allowClear width="30px"/>
           </Form.Item>
           <Form.Item
-              label="Account"
+              label="账户"
               name="account"
           >
             <Input allowClear width="30px"/>
           </Form.Item>
           <Form.Item
-              label="Age"
+              label="年龄"
               name="age"
           >
             <Input allowClear width="30px"/>
           </Form.Item>
           <Form.Item
-              label="Sex"
+              label="性别"
               name="sex"
           >
           <Select allowClear style={{ width: 120 }}>
@@ -394,11 +394,11 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
         </Form.Item>
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <Button type="primary" htmlType="submit" onClick={this.onConfirmSearch}>
-                Search
+                搜索
               </Button>
             </Form.Item>
       </Form>
-          <Button style={{float:'right'}} onClick={this.onClickAddUser}><UserAddOutlined />add user</Button>
+          <Button style={{float:'right'}} onClick={this.onClickAddUser}><UserAddOutlined />添加用户</Button>
         </div>
           <Table columns={this.columns} loading={isLoading} dataSource={formData } pagination={false}/>
           <Modal title="Edit" visible={isshowEditModel} onOk={this.onConfirmEditModel} onCancel={this.onCancelEditModel} width="500px">

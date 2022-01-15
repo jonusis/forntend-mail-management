@@ -52,34 +52,34 @@ class CarManage extends React.Component<CarManageProps,CarManageState>{
         dataIndex: 'postID',
       },
       {
-          title: 'Content',
+          title: '内容',
           dataIndex: 'content',
           width: '300px'
   
       },
       {
-        title: 'Heading',
+        title: '标题',
         dataIndex: 'heading',
         width: '300px'
       },
       {
-        title: 'Full',
+        title: '是否拼满',
         dataIndex: 'full',
       },
       {
-        title: 'PlaceA',
+        title: '出发地',
         dataIndex: 'placeA',
       },
       {
-        title: 'PlaceB',
+        title: '目的地',
         dataIndex: 'placeB',
       },
       {
-        title: 'NumExist',
+        title: '剩余人数',
         dataIndex: 'numExist',
       },
       {
-        title: 'NumNeed',
+        title: '需要人数',
         dataIndex: 'numNeed',
       },
       {
@@ -95,13 +95,13 @@ class CarManage extends React.Component<CarManageProps,CarManageState>{
         dataIndex: 'wechat',
       },
       {
-        title: 'Action',
+        title: '操作',
         key: 'action',
         width: '300px',
         render: (line: CarDto) => {
               return(
               <Space size="middle">
-                <Button onClick={() => this.showDeleteConfirm(line)}><DeleteOutlined />Delete</Button>
+                <Button onClick={() => this.showDeleteConfirm(line)}><DeleteOutlined />删除</Button>
               </Space>
             )
           },
@@ -315,7 +315,7 @@ class CarManage extends React.Component<CarManageProps,CarManageState>{
           </Form.Item>
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <Button type="primary" htmlType="submit" onClick={this.onConfirmSearch}>
-                Search
+                搜索
               </Button>
             </Form.Item>
       </Form>
