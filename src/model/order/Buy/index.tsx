@@ -1,16 +1,17 @@
 import React from 'react';
 import { Table, Form, Input, Button, Checkbox, Divider, FormInstance, Select, Space, Modal, message, Pagination ,Image, Avatar, Upload} from 'antd';
-import {GetUserList, DeleteUser, UpdateUser, AddUser, SearchUserList} from '../../static/request/user';
-import {UserDto} from '../../static/response';
+import {GetBuyList, DeleteBuy, UpdateBuy, AddBuy, SearchBuyList} from '../../../static/request/buy';
+import {BuyDto} from '../../../static/resType/buy';
 import './index.css';
-import { DeleteOutlined, DownOutlined, EditOutlined, ExclamationCircleOutlined, UploadOutlined, UserAddOutlined } from '@ant-design/icons';
+import { CaretRightOutlined, DeleteOutlined, DownOutlined, EditOutlined, ExclamationCircleOutlined, UploadOutlined, UserAddOutlined } from '@ant-design/icons';
 import { UploadChangeParam } from 'antd/lib/upload';
 import { RcFile, UploadFile } from 'antd/lib/upload/interface';
+import { Navigate } from 'react-router';
 const { confirm } = Modal;
-interface UserManageState{
-  formData: UserDto[]
+interface BuyManageState{
+  formData: BuyDto[]
   selectedRowKeys:any[]
-  isEditData: UserDto
+  isEditData: BuyDto
   isLoading: boolean
   isshowEditModel: boolean
   isshowAddModel: boolean
@@ -18,90 +19,84 @@ interface UserManageState{
   totalPage: number
   pageSize: number
   updateUrl: string
+  isToDetail: boolean
 }
-interface UserManageProps{
+interface BuyManageProps{
     
 }
-const { Option } = Select;
 
-class UserManage extends React.Component<UserManageProps,UserManageState>{
+class BuyManage extends React.Component<BuyManageProps,BuyManageState>{
     EditformRef = React.createRef<FormInstance>();
     AddformRef = React.createRef<FormInstance>();
     SearchformRef = React.createRef<FormInstance>();
-    constructor(props: UserManageProps){
+    constructor(props: BuyManageProps){
         super(props);
         this.state = {
           selectedRowKeys: [], // Check here to configure the default column
           formData : [],
-          isEditData: {} as UserDto,
+          isEditData: {} as BuyDto,
           isLoading: false,
           isshowEditModel: false,
           isshowAddModel: false,
           currentPage: 0,
           totalPage: 50,
           pageSize: 6,
-          updateUrl: ""
+          updateUrl: "",
+          isToDetail: false
         };
     }
     columns = [
       {
-          title: 'uid',
-          dataIndex: 'uid',
+          title: 'id',
+          dataIndex: 'id',
       },
       {
-          title: '名字',
-          dataIndex: 'name',
+        title: 'PostID',
+        dataIndex: 'postID',
+      },
+      {
+          title: '内容',
+          dataIndex: 'content',
           width: '300px'
   
       },
       {
-        title: '账户',
-        dataIndex: 'account',
+        title: '标题',
+        dataIndex: 'heading',
         width: '300px'
       },
       {
-        title: '年龄',
-        dataIndex: 'age',
+        title: '是否拼满',
+        dataIndex: 'full',
       },
       {
-        title: '性别',
-        dataIndex: 'sex',
+        title: '发起时间',
+        dataIndex: 'datetime',
       },
       {
-        title: 'QQ',
-        dataIndex: 'qq',
+        title: '类别',
+        dataIndex: 'kind',
       },
       {
-        title: 'Tel',
-        dataIndex: 'tel',
+        title: '地点',
+        dataIndex: 'location',
       },
       {
-        title: 'Wechat',
-        dataIndex: 'wechat',
+        title: '剩余人数',
+        dataIndex: 'numExist',
       },
       {
-        title: '头像',
-        width: '300px',
-        key: 'headpicture',
-        render: (line: UserDto) => {
-          return(
-          <Space size="middle">
-            <Avatar shape="square" size={64} icon={<Image src={line.headPicture}></Image>} /> 
-          </Space>
-        )
-      },
+        title: '需要人数',
+        dataIndex: 'numNeed',
       },
       {
         title: '操作',
         key: 'action',
         width: '300px',
-        render: (line: UserDto) => {
+        render: (line: BuyDto) => {
               return(
               <Space size="middle">
-                <Button onClick={async () => {
-                  await this.setState({isEditData:line}); 
-                  this.showEditConfirm();
-                  }}><EditOutlined />编辑</Button>
+                <Button onClick={async () => {await this.setState({isEditData:line}); this.linkToDetail();}}>订单详情<CaretRightOutlined /></Button>
                 <Button onClick={() => this.showDeleteConfirm(line)}><DeleteOutlined />删除</Button>
               </Space>
             )
@@ -109,7 +104,7 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
       },
     ];
     async componentDidMount(){
-      const res = await GetUserList(1,8);
+      const res = await GetBuyList(1,8);
       this.setState({
         formData: res.data,
         currentPage: res.currentpage,
@@ -121,14 +116,17 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
       await this.EditformRef.current?.resetFields();
       await this.AddformRef.current?.resetFields();
     }
+    linkToDetail = () => {
+      this.setState({isToDetail: true});
+    }
     async updateFormList(){
-      const res = await GetUserList(1,8);
+      const res = await GetBuyList(1,8);
       this.setState({
         formData: res.data,
         currentPage: 1
       })
     }
-    showDeleteConfirm = (line: UserDto) => {
+    showDeleteConfirm = (line: BuyDto) => {
       const that = this;
       this.setState({isEditData:line});
       confirm({
@@ -136,7 +134,7 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
         icon: <ExclamationCircleOutlined />,
         async onOk() {
           await that.setState({isLoading: true});
-          const res = await DeleteUser(line.uid);
+          const res = await DeleteBuy(line.id);
           if(res.code == 200){
             that.updateFormList();
             message.info('Delete success');
@@ -154,10 +152,10 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
     }
     onConfirmEditModel = async () => {
       const data = this.EditformRef.current?.getFieldsValue(true);
-      data.headPicture = data.headPicture.file ? data.headPicture.file.response.data : null;
-      data.sex = data.sex === '男' ? '1' : '0';
+      data.sex = data.sex === '女' ? '0' : '1';
+      data.headPicture = data.headPicture.file.response.data;
       this.setState({isshowEditModel: false,isLoading: true});
-      const res = await UpdateUser(data);
+      const res = await UpdateBuy(data);
       if(res.code == 200){
         this.updateFormList();
         message.info('Update success');
@@ -171,9 +169,9 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
     }
     onConfirmAddModel = async () => {
       const data = this.AddformRef.current?.getFieldsValue(true);
-      data.sex = data.sex === '男' ? '1' : '0';
+      data.sex = data.sex === '女' ? '0' : '1';
       this.setState({isshowAddModel: false,isLoading: true});
-      const res = await AddUser(data);
+      const res = await AddBuy(data);
       if(res.code == 200){
         this.updateFormList();
         message.info('add success');
@@ -196,62 +194,40 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
         ref={this.EditformRef}
       >
         <Form.Item
-            label="Name"
-            name="name"
+            label="Content"
+            name="content"
           >
             <Input width="30px"/>
           </Form.Item>
           <Form.Item
-              label="Account"
-              name="account"
+              label="Datetime"
+              name="datetime"
           >
             <Input width="30px"/>
           </Form.Item>
           <Form.Item
-              label="Age"
-              name="age"
+              label="Full"
+              name="full"
           >
             <Input width="30px"/>
           </Form.Item>
           <Form.Item
-              label="Tel"
-              name="tel"
+              label="Heading"
+              name="heading"
           >
             <Input width="30px"/>
           </Form.Item>
           <Form.Item
-              label="QQ"
-              name="qq"
+              label="NumExist"
+              name="numExist"
           ><Input width="30px"/>
           </Form.Item>
            <Form.Item
-              label="Wechat"
-              name="wechat"
+              label="NumNeed"
+              name="numNeed"
           >
             <Input width="30px"/>
           </Form.Item>
-          <Form.Item
-              label="Sex"
-              name="sex"
-          >
-          <Select style={{ width: 120 }}>
-          <Option value="0">女</Option>
-          <Option value="1">男</Option>
-          </Select>
-        </Form.Item>
-        <Form.Item
-              label="HeadPicture"
-              name="headPicture"
-          >
-            <Upload
-            action="http://10.189.1.135:8080/file/"
-            listType="picture"
-            headers={{"mode":"cors"}}
-            className="upload-list-inline"
-          >
-            <Button icon={<UploadOutlined />}>Upload</Button>
-          </Upload>
-        </Form.Item>
       </Form>
       )
     }
@@ -264,77 +240,48 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
         autoComplete="off"
         ref={this.AddformRef}
       >
-        <Form.Item
-            label="名字"
-            name="name"
+         <Form.Item
+            label="Content"
+            name="content"
           >
             <Input width="30px"/>
           </Form.Item>
           <Form.Item
-              label="账户"
-              name="account"
+              label="Datetime"
+              name="datetime"
           >
             <Input width="30px"/>
           </Form.Item>
           <Form.Item
-              label="密码"
-              name="password"
+              label="Full"
+              name="full"
           >
             <Input width="30px"/>
           </Form.Item>
           <Form.Item
-              label="年龄"
-              name="age"
+              label="Heading"
+              name="heading"
           >
             <Input width="30px"/>
           </Form.Item>
           <Form.Item
-              label="Tel"
-              name="tel"
-          >
-            <Input width="30px"/>
-          </Form.Item>
-          <Form.Item
-              label="QQ"
-              name="qq"
-          >
-            <Input width="30px"/>
+              label="NumExist"
+              name="numExist"
+          ><Input width="30px"/>
           </Form.Item>
            <Form.Item
-              label="Wechat"
-              name="wechat"
+              label="NumNeed"
+              name="numNeed"
           >
             <Input width="30px"/>
           </Form.Item>
-          <Form.Item
-              label="性别"
-              name="sex"
-          >
-          <Select style={{ width: 120 }}>
-          <Option value="0">女</Option>
-          <Option value="1">男</Option>
-              </Select>
-          </Form.Item>
-          <Form.Item
-              label="HeadPicture"
-              name="headPicture"
-          >
-            <Upload
-            action="http://10.189.1.135:8080/file/"
-            listType="picture"
-            headers={{"mode":"cors"}}
-            className="upload-list-inline"
-          >
-            <Button icon={<UploadOutlined />}>Upload</Button>
-          </Upload>
-        </Form.Item>
       </Form>
       )
     }
     onConfirmSearch = async () => {
       const value = this.SearchformRef.current?.getFieldsValue(true);
-      const param = {name:value.Name,account:value.account,age:value.age,sex:value.sex};
-      const res = await SearchUserList(param);
+      const param = {userID:value.postID};
+      const res = await SearchBuyList(param);
       this.setState({
           formData: res.data,
           currentPage: res.currentpage,
@@ -342,12 +289,12 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
           pageSize: 8,
       })
     }
-    onClickAddUser = () => {
+    onClickAddBuy = () => {
       this.setState({isshowAddModel: true})
     }
     onChangePageSize = async (page: number, pageSize: number) => {
       this.setState({isLoading:true});
-      const res = await GetUserList(page,pageSize);
+      const res = await GetBuyList(page,pageSize);
       this.setState({
         formData: res.data,
         currentPage: res.currentpage,
@@ -355,7 +302,7 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
       })
     }
     render(){
-      const {formData, isLoading,isshowEditModel,isshowAddModel,totalPage,currentPage,pageSize} = this.state;
+      const {formData, isLoading,isshowEditModel,isshowAddModel,totalPage,currentPage,pageSize,isToDetail,isEditData} = this.state;
         return(
         <div style={{background:'white',padding:'10px 30px'}}>
           <div className="searchForm">
@@ -366,50 +313,31 @@ class UserManage extends React.Component<UserManageProps,UserManageState>{
             ref= {this.SearchformRef}
           >
           <Form.Item
-            label="名字"
-            name="Name"
+            label="PostID"
+            name="postID"
           >
             <Input allowClear width="30px"/>
           </Form.Item>
-          <Form.Item
-              label="账户"
-              name="account"
-          >
-            <Input allowClear width="30px"/>
-          </Form.Item>
-          <Form.Item
-              label="年龄"
-              name="age"
-          >
-            <Input allowClear width="30px"/>
-          </Form.Item>
-          <Form.Item
-              label="性别"
-              name="sex"
-          >
-          <Select allowClear style={{ width: 120 }}>
-            <Option value="0">女</Option>
-            <Option value="1">男</Option>
-          </Select>
-        </Form.Item>
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <Button type="primary" htmlType="submit" onClick={this.onConfirmSearch}>
                 搜索
               </Button>
             </Form.Item>
       </Form>
-          <Button style={{float:'right'}} onClick={this.onClickAddUser}><UserAddOutlined />添加用户</Button>
         </div>
           <Table columns={this.columns} loading={isLoading} dataSource={formData } pagination={false}/>
           <Modal title="Edit" visible={isshowEditModel} onOk={this.onConfirmEditModel} onCancel={this.onCancelEditModel} width="500px">
             {this.onRenderEditForm()}
           </Modal>
-          <Modal title="Add User" visible={isshowAddModel} onOk={this.onConfirmAddModel} onCancel={this.onCancelAddModel} width="500px">
+          <Modal title="Add Buy" visible={isshowAddModel} onOk={this.onConfirmAddModel} onCancel={this.onCancelAddModel} width="500px">
             {this.onRenderAddForm()}
           </Modal>
           <Pagination defaultCurrent={1} current={currentPage} total={totalPage} pageSize={pageSize} onChange={this.onChangePageSize} style={{margin:'20px auto'}}/>
+          { isToDetail && (
+            <Navigate to={`/order/buyDetail?oid=${isEditData.id}`} replace={true} />
+          )}
       </div>
       )
     }
 }
-export default UserManage;
+export default BuyManage;

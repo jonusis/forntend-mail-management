@@ -3,10 +3,13 @@ import { Form, Input, Button, Checkbox, Divider, FormInstance } from 'antd';
 import './index.css';
 import {HomeOutlined} from '@ant-design/icons';
 import {UserLogin} from '../../static/request/login'
+import { withRouter } from '../../static/compoments/withRouter';
+import { NavigateFunction } from 'react-router-dom';
 interface LoginState{
 }
 interface LoginProps{
-    
+    navigate: NavigateFunction
+    location: Location
 }
 
 class Login extends React.Component<LoginProps,LoginState>{
@@ -31,6 +34,7 @@ class Login extends React.Component<LoginProps,LoginState>{
             this.formRef.current?.setFieldsValue({username:"",password:""});
             if(res.code === 200){
                 //路由跳转
+                this.props.navigate('/user/manage');
             }else{
                 window.alert("登陆失败，请输入正确的账户密码");
             }
@@ -86,4 +90,4 @@ class Login extends React.Component<LoginProps,LoginState>{
     )
     }
 }
-export default Login;
+export default withRouter(Login);

@@ -18,7 +18,7 @@ export class UserResponseArrayDto{
         const localData: UserDto[] = []
         message.data.forEach((item: UserBto) => localData.push(new UserDto(item)))
         this.code = message.code;
-        this.msg = message.msg;
+        this.msg = message.msg; 
         this.data = localData;
         this.currentpage = message.pageNum;
         this.maxPageSize = message.pageMaxSize;
@@ -34,29 +34,46 @@ export class ResponseStateDto{
         this.data = message.data;
     }
 }
-interface UserBto{
-    name: string;
+export interface UserBto{
+    account : string;
+    age : number;
     uid: number;
-    account: string;
-    password?: string;
-    age: number;
     sex: number;
+    name: string;
+    password:string;
+    userPicture: string;
+    stNum: string;
+    headPicture: string;
+    tel: string;
+    qq: string;
+    wechat: string;
 }
 export class UserDto{
-    name: string;
+    account : string;
+    age : number;
     uid: number;
-    account: string;
-    password?: string;
-    age: number;
     sex: string;
-    key: number;
+    name: string;
+    password:string;
+    userPicture: string;
+    stNum: string;
+    headPicture: string;
+    tel: string;
+    qq: string;
+    wechat: string;
     constructor(user: UserBto){
-        this.name = user.name;
-        this.key = user.uid;
         this.uid = user.uid;
         this.account = user.account;
-        this.age = user.age;
-        this.sex = user.sex === 0 ? '女' : '男';
+        this.name = user.name;
+        this.userPicture = user.userPicture;
+        this.stNum = user.stNum;
+        this.tel = user.tel;
+        this.headPicture = user.headPicture;
+        this.qq = user.qq;
+        this.wechat = user.wechat;
+        this.age  = user.age;
+        this.password = user.password;
+        this.sex = user.sex === 1? '男':'女' ; 
     }
 }
 interface UserResDto{

@@ -1,6 +1,6 @@
 export default class Request{
     private static Instance:Request = new Request();
-    private static url:string = 'http://localhost:8080/v1';
+    private static url:string = 'http://10.189.1.135:8080/v1';
     public static GetInstance = ():Request => {
         return this.Instance;
     }

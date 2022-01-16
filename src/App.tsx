@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Link, Routes, Route} from 'react-router-dom';
+import {BrowserRouter, Link, Routes, Route, Navigate} from 'react-router-dom';
 import routes,{RouteMoudle} from './static/router/router';
 import { Breadcrumb, Button, Layout, Menu } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined, HomeOutlined, ShoppingCartOutlined, LineChartOutlined } from '@ant-design/icons';
@@ -41,7 +41,7 @@ class App extends React.Component<AppProps,AppState>{
       const {hasLogin} = this.state;
         return <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login/>} />
+          <Route path="/login" element={<Login />}/>
         </Routes>
         <Layout style={{ minHeight: '100vh' }}>
             <div className="header">
@@ -51,7 +51,7 @@ class App extends React.Component<AppProps,AppState>{
               </div>
               <div className="loginMessage2">
                 <Link to={`/login`} style={{ cursor: 'pointer' }}>注销</Link>
-                <span> ｜ 欢迎你，xiaohpng</span>
+                <span> ｜ 欢迎你，管理员</span>
               </div>
             </div>
             <Layout>
@@ -77,28 +77,38 @@ class App extends React.Component<AppProps,AppState>{
                       <Link to={`/order/list`}>订单列表</Link>
                     </Menu.Item>
                     <Menu.Item key="3-2">
-                      <Link to={`/order/set`}>订单设置</Link>
+                      <Link to={`/order/add`}>新建订单</Link>
                     </Menu.Item>
                     <Menu.Item key="3-3">
-                      <Link to={`/order/returnApply`}>退换货请求</Link>
+                      <Link to={`/order/buyList`}>拼购订单</Link>
+                    </Menu.Item>
+                    <Menu.Item key="3-4">
+                      <Link to={`/order/carList`}>拼车订单</Link>
                     </Menu.Item>
                   </SubMenu>
                   <SubMenu key="sub4" icon={<LaptopOutlined />} title="商品">
                     <Menu.Item key="4-1">
                       <Link to={`/product/list`}>商品列表</Link>
                     </Menu.Item>
-                    <Menu.Item key="4-2">
-                      <Link to={`/product/add`}>添加商品</Link>
-                    </Menu.Item>
                     <Menu.Item key="4-3">
                       <Link to={`/product/type`}>商品分类</Link>
                     </Menu.Item>
                   </SubMenu>
-                  <SubMenu key="sub5" icon={<LineChartOutlined />} title="权限">
+                  <SubMenu key="sub5" icon={<LaptopOutlined />} title="地址">
                     <Menu.Item key="5-1">
+                      <Link to={`/address/list`}>地址列表</Link>
+                    </Menu.Item>
+                  </SubMenu>
+                  <SubMenu key="sub6" icon={<LaptopOutlined />} title="物流">
+                    <Menu.Item key="6-1">
+                      <Link to={`/delivery/Statelist`}>物流状态列表</Link>
+                    </Menu.Item>
+                  </SubMenu>
+                  <SubMenu key="sub7" icon={<LineChartOutlined />} title="权限">
+                    <Menu.Item key="7-1">
                       <Link to={`/admin/manage`}>后台账户管理</Link>
                     </Menu.Item>
-                    <Menu.Item key="5-2">
+                    <Menu.Item key="7-2">
                       <Link to={`/admin/setting`}>系统设置</Link>
                     </Menu.Item>
                   </SubMenu>

@@ -1,3 +1,4 @@
+import qs from "qs";
 import Request from "../request"
 import { UserResponseDto, ResponseStateDto, UserResponseArrayDto } from "../response";
 const request = Request.GetInstance();
@@ -10,11 +11,17 @@ export const GetUserList = async (pageNum?: number,pageSize?: number) => {
 
 export const AddUser = async (
     body:{
-        account: string,
-        age:number,
-        name:string,
-        password:string,
-        sex:number
+        account : string;
+        age : number;
+        uid: number;
+        sex: string;
+        name: string;
+        password:string;
+        stNum: string;
+        headPicture: string;
+        tel: string;
+        qq: string;
+        wechat: string;
     }
 ) => {
     const res = await request.Fetch(`${url}/user/addUser`,'POST',body);
@@ -33,14 +40,31 @@ export const QueryUserById = async (uid: number) => {
 
 export const UpdateUser = async (    
     body:{
-    uid: number,
-    account: string,
-    age:number,
-    name:string,
-    password:string,
-    sex:number
+        account : string;
+        age : number;
+        uid: number;
+        sex: string;
+        name: string;
+        password:string;
+        stNum: string;
+        headPicture: string;
+        tel: string;
+        qq: string;
+        wechat: string;
     }
 ) => {
     const res = await request.Fetch(`${url}/user/updateUser`,'PUT',body);
     return new ResponseStateDto(res);
+}
+
+export const SearchUserList = async (
+    param:{
+    username?: string,
+    id?: number,
+    age?:string,
+    sex?:string
+    }
+    ) => {
+    const res = await request.Fetch(`${url}/user/searchUser?${qs.stringify(param)}`,'GET');
+    return new UserResponseArrayDto(res);
 }
